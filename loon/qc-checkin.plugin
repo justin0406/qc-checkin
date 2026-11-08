@@ -1,0 +1,11 @@
+#!name=青瓷游戏每日签到
+#!desc=青瓷 H5 活动自动签到（默认最强蜗牛 app_id=39）。在微信打开一次活动页即可自动签到，之后靠会话保活持续自动。
+
+[Script]
+http-request ^https?://api\.qingcigame\.com/ script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js, requires-body=false, timeout=30, tag=青瓷捕获
+http-response ^https?://api\.qingcigame\.com/ script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js, requires-body=false, timeout=30, tag=青瓷响应
+cron "0 * * * *" script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js, argument=keepalive, timeout=60, tag=青瓷保活
+cron "0 9 * * *" script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js, timeout=60, tag=青瓷签到
+
+[MITM]
+hostname = api.qingcigame.com, h5.qingcigame.com
