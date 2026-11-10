@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 语法检查
+        run: node --check scripts/qc_sign.js
+      - name: 模块/插件配置检查
+        run: |
+          set -e
+          for f in surge/qc-checkin.sgmodule loon/qc-checkin.plugin; do
+            grep -q '^\[Script\]' "$f" || { echo "$f 缺少 [Script]"; exit 1; }
+            grep -q 'script-path=' "$f" || { echo "$f 缺少 script-path"; exit 1; }
+          done
+      - name: 行为测试（模拟 Surge 环境）
+        run: node tests/harness.js scripts/qc_sign.js
