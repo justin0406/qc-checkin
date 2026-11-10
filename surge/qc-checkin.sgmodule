@@ -2,10 +2,9 @@
 #!desc=青瓷 H5 活动自动签到（默认最强蜗牛 app_id=39）。在微信打开一次活动页即可自动签到，之后靠会话保活持续自动。
 
 [Script]
-青瓷捕获 = type=http-request,pattern=^https?://api\.qingcigame\.com/,script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js,requires-body=false,timeout=30
-青瓷响应 = type=http-response,pattern=^https?://api\.qingcigame\.com/,script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js,requires-body=false,timeout=30
-青瓷保活 = type=cron,cronexp=0 * * * *,wake-system=1,script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js,argument=keepalive,timeout=60
-青瓷签到 = type=cron,cronexp=0 9 * * *,wake-system=1,script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js,timeout=60
+青瓷捕获 = type=http-request,pattern=^https?://api\.qingcigame\.com/,script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js,requires-body=false,timeout=10,script-update-interval=86400
+青瓷响应 = type=http-response,pattern=^https?://api\.qingcigame\.com/,script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js,requires-body=false,timeout=10,script-update-interval=86400
+青瓷维持 = type=cron,cronexp=0 * * * *,wake-system=1,script-path=https://raw.githubusercontent.com/justin0406/qc-checkin/main/scripts/qc_sign.js,timeout=60,script-update-interval=86400
 
 [MITM]
 hostname = %APPEND% api.qingcigame.com, h5.qingcigame.com
